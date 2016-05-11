@@ -65,8 +65,8 @@ CREATE TABLE `cliente` (
   `mail` varchar(255) DEFAULT NULL,
   `id_empresa` int(11) NOT NULL,
   `genero` char(1) DEFAULT NULL,
-  `id_menu` smallint(6) NOT NULL,
-  `fecha` datetime DEFAULT NULL,
+  `id_perfil` tinyint(4) NOT NULL,
+  `clave` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`documento`,`id_tipo_doc`,`id_empresa`),
   UNIQUE KEY `documento` (`documento`),
   UNIQUE KEY `id_tipo_doc` (`id_tipo_doc`),
@@ -74,13 +74,11 @@ CREATE TABLE `cliente` (
   UNIQUE KEY `id_provincia` (`id_provincia`),
   UNIQUE KEY `id_pais` (`id_pais`),
   UNIQUE KEY `id_empresa` (`id_empresa`),
-  UNIQUE KEY `id_menu` (`id_menu`),
-  KEY `cliente` (`id_menu`,`fecha`),
   CONSTRAINT `fk_ciu_pro_pai_men_fec` FOREIGN KEY (`id_tipo_doc`) REFERENCES `tipo_doc` (`id_tipo_doc`),
   CONSTRAINT `cliente_ibfk_1` FOREIGN KEY (`id_ciudad`) REFERENCES `ciudad` (`id_ciudad`),
   CONSTRAINT `cliente_ibfk_2` FOREIGN KEY (`id_provincia`) REFERENCES `provincia` (`id_provincia`),
   CONSTRAINT `cliente_ibfk_3` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id_pais`),
-  CONSTRAINT `cliente_ibfk_4` FOREIGN KEY (`id_menu`, `fecha`) REFERENCES `menu` (`id_menu`, `fecha`)
+  CONSTRAINT `fk_cli_perf` FOREIGN KEY (`id_perfil`) REFERENCES `perfiles` (`id_perfil`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -441,6 +439,34 @@ LOCK TABLES `tipo_doc` WRITE;
 /*!40000 ALTER TABLE `tipo_doc` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tipo_doc` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `usuario`
+--
+
+DROP TABLE IF EXISTS `usuario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usuario` (
+  `descripcion` varchar(15) NOT NULL,
+  `id_perfil` tinyint(4) NOT NULL,
+  `documento` varchar(20) NOT NULL,
+  `clave` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`descripcion`,`documento`),
+  UNIQUE KEY `id_perfil` (`id_perfil`),
+  UNIQUE KEY `documento` (`documento`),
+  CONSTRAINT `fk_perf_user` FOREIGN KEY (`id_perfil`) REFERENCES `perfiles` (`id_perfil`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usuario`
+--
+
+LOCK TABLES `usuario` WRITE;
+/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -451,4 +477,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-17 16:56:07
+-- Dump completed on 2016-04-26 19:43:07
