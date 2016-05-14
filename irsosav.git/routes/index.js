@@ -26,16 +26,12 @@ app.use(bodyParser.json());
 
 app.set('port', (process.env.PORT || 3000));
 
-app.get('/login', function(request, response) {
+app.get('/empleados', function(request, response) {
   dbconn.query('SELECT * FROM cliente', function(err, rows) {
     if(err) throw err;    
-    //for (var i = 0; i < rows.length; i++) {
-    //  console.log(rows[i].name);
-    //  response.jsonp(rows[i].id_ciudad); //Envia solo el campo documento
-    //  response.jsonp(rows);
-    var empleados=[];
+    var empleados=[]; // Se crea un array vacio.
     for (var i = 0; i < rows.length; i++) {
-      var empleado={};
+      var empleado={}; // Se crea un objeto vacio.
       empleado.descripcion=rows[i].descripcion;
       empleados.push(empleado);
     };
@@ -43,7 +39,7 @@ app.get('/login', function(request, response) {
   });
 });
 
-app.get('/login/:uid', function(request, response) {
+app.get('/empleado/:uid', function(request, response) {
   dbconn.query("SELECT * FROM cliente where documento=" +request.params.uid, function(err, rows) {
     if(err) throw err;    
 //    for (var i = 0; i < rows.length; i++) {
@@ -56,7 +52,7 @@ app.get('/login/:uid', function(request, response) {
 //      var empleado={};
 //      empleado.descripcion=rows[i].descripcion;
 //      empleados.push(empledo);
-//    }
+//    };
        response.jsonp(rows);
   });
 });
