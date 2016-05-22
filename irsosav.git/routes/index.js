@@ -73,7 +73,8 @@ app.get('/empleado/:uid', function(req, res) {
 app.get('/test/:uid', function(req, res) {
     var test=[];
     var texto={};
-    texto = "Hola mundo "+req.params.uid;
+    texto.id = ""+req.params.uid;
+    texto.content = "Hola mundo";
     test.push(texto);
     res.jsonp(test);
   });
