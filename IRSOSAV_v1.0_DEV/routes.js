@@ -7,13 +7,11 @@ module.exports = {
     });
 
     app.get('/todo/:id/', function(req, res) {
-      todo.get(req.params.id, res);
-      //var test=[];
-      //var texto={};
-      //texto.id = ""+req.params.uid;
-      //texto.content = "Hola mundo";
-      //test.push(texto);
-      //res.jsonp(test);
+      todo.getid(req.params.id, res);
+    });
+    
+    app.get('/test/:id/', function(req, res) {
+      todo.gettid(req.params.id, res);
     });
 
     app.post('/todo/', function(req, res) {
