@@ -1,13 +1,26 @@
 var connection = require('../connection');
 
 function Todo() {
-  this.get = function(res) {
-    connection.acquire(function(err, con) {
-      con.query('select * from cliente', function(err, result) {
-        con.release();
-        res.send(result);
+  this.get = function(uid, res) {
+    if (uid != null) {
+      connection.acquire(function(err, con) {
+        con.query('select * from cliente', function(err, result) {
+          con.release();
+          res.send(result);
+        });
       });
-    });
+    } else {
+      connection.acquire(function(err, con) {
+        con.query('select * from cliente where documento = ?', [uid] function(err, result) {
+          con.release();
+          if (err) {
+            res.send('Seleccion fallida.')
+            } else {
+            res.send(result);
+          });
+        });
+      };
+    }
   };
 
   this.create = function(todo, res) {
