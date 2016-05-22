@@ -27,5 +27,5 @@ module.exports = {
     app.delete('/todo/:id/', function(req, res) {
       todo.delete(req.params.id, res);
     });
-  };
+  }
 };
