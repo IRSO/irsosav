@@ -6,8 +6,8 @@ module.exports = {
       todo.get(res);
     });
 
-    app.get('/todo/:documento/', function(req, res) {
-      todo.get(req.params.documento, res);
+    app.get('/todo/:id/', function(req, res) {
+      todo.get(req.params.id, res);
       //var test=[];
       //var texto={};
       //texto.id = ""+req.params.uid;

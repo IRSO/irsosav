@@ -1,8 +1,8 @@
 var connection = require('../connection');
 
 function Todo() {
-  this.get = function(documento, res) {
-    if (uid = null) {
+  this.get = function(id, res) {
+    if (id = null) {
       connection.acquire(function(err, con) {
         con.query('select * from cliente', function(err, result) {
           con.release();
@@ -11,7 +11,7 @@ function Todo() {
       });
     } else {
       connection.acquire(function(err, con) {
-        con.query('select * from cliente where documento = ?', [documento] function(err, result) {
+        con.query('select * from cliente where documento = ?', [id], function(err, result) {
           con.release();
           if (err) {
             res.send('Seleccion fallida.')
