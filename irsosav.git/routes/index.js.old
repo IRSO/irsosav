@@ -37,12 +37,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 
+<<<<<<< HEAD
 app.get('/empleados', function(req, res) {
+=======
+app.get('/empleados', function(request, response) {
+>>>>>>> 9ffb52225335b04113ef4622d0da80ef9355eac1
   dbconn.query('SELECT * FROM cliente', function(err, rows) {
     if(err) throw err;    
     var empleados=[]; // Se crea un array vacio.
     for (var i = 0; i < rows.length; i++) {
       var empleado={}; // Se crea un objeto vacio.
+<<<<<<< HEAD
       empleado.documento=rows[i].documento;
       empleado.id_tipo_doc=rows[i].id_tipo_doc;
       empleado.id_empresa=rows[i].id_empresa;
@@ -50,6 +55,8 @@ app.get('/empleados', function(req, res) {
       empleado.id_provincia=rows[i].id_provincia;
       empleado.id_pais=rows[i].id_pais;
       empleado.id_perfil=rows[i].id_perfil;
+=======
+>>>>>>> 9ffb52225335b04113ef4622d0da80ef9355eac1
       empleado.descripcion=rows[i].descripcion;
       empleado.domicilio=rows[i].domicilio;
       empleado.telefono=rows[i].telefono;
@@ -63,10 +70,28 @@ app.get('/empleados', function(req, res) {
   });
 });
 
+<<<<<<< HEAD
 app.get('/empleado/:uid', function(req, res) {
   dbconn.query("SELECT * FROM cliente where documento=" +req.params.uid, function(err, rows) {
     if(err) throw err;    
     res.jsonp(rows);
+=======
+app.get('/empleado/:uid', function(request, response) {
+  dbconn.query("SELECT * FROM cliente where documento=" +request.params.uid, function(err, rows) {
+    if(err) throw err;    
+//    for (var i = 0; i < rows.length; i++) {
+    //console.log(rows);
+//      response.jsonp(rows[i]);
+//     };
+//  });
+//    var empleados=[];
+//    for (var i = 0; i < rows.length; i++) {
+//      var empleado={};
+//      empleado.descripcion=rows[i].descripcion;
+//      empleados.push(empledo);
+//    };
+       response.jsonp(rows);
+>>>>>>> 9ffb52225335b04113ef4622d0da80ef9355eac1
   });
 });
                  
