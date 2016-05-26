@@ -42,7 +42,7 @@ CREATE TABLE `ciudad` (
 
 LOCK TABLES `ciudad` WRITE;
 /*!40000 ALTER TABLE `ciudad` DISABLE KEYS */;
-INSERT INTO `ciudad` VALUES (1,1,1,'Capital federal');
+INSERT INTO `ciudad` VALUES (1,1,1,'Capital federal'),(2,2,2,'Las Condes');
 /*!40000 ALTER TABLE `ciudad` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -90,7 +90,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES ('29938654',1,1,1,1,1,1,'Marcelo Ramirez','Pichincha 911','4837-1399','15-5634-6112','mramirez@village.com.ar','m','200820e3227815ed1756a6b531e7e0d2');
+INSERT INTO `cliente` VALUES ('29938654',1,1,1,1,1,1,'Marcelo Ramirez','Pichincha 911','4837-1399','15-5634-6112','mramirez@village.com.ar','m','200820e3227815ed1756a6b531e7e0d2'),('50938654',2,2,2,2,2,2,'Amador Chavez','Nueva de Lyon 147','837-1399','15-634-6112','achavez@village.com.ar','m','845a350f830ac3a777a487c5a8474b6b');
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,7 +115,7 @@ CREATE TABLE `cod_comida` (
 
 LOCK TABLES `cod_comida` WRITE;
 /*!40000 ALTER TABLE `cod_comida` DISABLE KEYS */;
-INSERT INTO `cod_comida` VALUES (1,'M1');
+INSERT INTO `cod_comida` VALUES (1,'M1'),(2,'M2');
 /*!40000 ALTER TABLE `cod_comida` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,7 +140,7 @@ CREATE TABLE `cod_postre` (
 
 LOCK TABLES `cod_postre` WRITE;
 /*!40000 ALTER TABLE `cod_postre` DISABLE KEYS */;
-INSERT INTO `cod_postre` VALUES (1,'P1');
+INSERT INTO `cod_postre` VALUES (1,'P1'),(2,'P2');
 /*!40000 ALTER TABLE `cod_postre` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -170,7 +170,7 @@ CREATE TABLE `comida` (
 
 LOCK TABLES `comida` WRITE;
 /*!40000 ALTER TABLE `comida` DISABLE KEYS */;
-INSERT INTO `comida` VALUES (1,1,'Milanesa con papas fritas',432,'2016-05-08');
+INSERT INTO `comida` VALUES (1,1,'Milanesa con papas fritas',432,'2016-05-08'),(2,2,'Pollo al horno con papas',256,'2016-05-08');
 /*!40000 ALTER TABLE `comida` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -209,8 +209,38 @@ CREATE TABLE `empresa` (
 
 LOCK TABLES `empresa` WRITE;
 /*!40000 ALTER TABLE `empresa` DISABLE KEYS */;
-INSERT INTO `empresa` VALUES (1,'-15635877',1,1,1,'Village','Cerrito 312','4959-2389','info@village.com.ar');
+INSERT INTO `empresa` VALUES (1,'-15635877',1,1,1,'Village','Cerrito 312','4959-2389','info@village.com.ar'),(2,'-15987877',2,2,2,'Village Chile','Lyon 312','959-2389','info@village.cl');
 /*!40000 ALTER TABLE `empresa` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `login`
+--
+
+DROP TABLE IF EXISTS `login`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `login` (
+  `id_usuario` int(11) NOT NULL,
+  `id_perfil` tinyint(4) NOT NULL,
+  `usuario` varchar(20) NOT NULL,
+  `clave` varchar(32) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_usuario`,`usuario`),
+  UNIQUE KEY `id_usuario` (`id_usuario`),
+  UNIQUE KEY `usuario` (`usuario`),
+  KEY `fk_login_perf` (`id_perfil`),
+  CONSTRAINT `fk_login_perf` FOREIGN KEY (`id_perfil`) REFERENCES `perfiles` (`id_perfil`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `login`
+--
+
+LOCK TABLES `login` WRITE;
+/*!40000 ALTER TABLE `login` DISABLE KEYS */;
+/*!40000 ALTER TABLE `login` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -244,7 +274,7 @@ CREATE TABLE `menu` (
 
 LOCK TABLES `menu` WRITE;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
-INSERT INTO `menu` VALUES (1,'2016-05-08 00:00:00',1,1,1,20);
+INSERT INTO `menu` VALUES (1,'2016-05-08 00:00:00',1,1,1,20),(2,'2016-05-08 00:00:00',2,2,2,20);
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -270,7 +300,7 @@ CREATE TABLE `pais` (
 
 LOCK TABLES `pais` WRITE;
 /*!40000 ALTER TABLE `pais` DISABLE KEYS */;
-INSERT INTO `pais` VALUES (1,'Argentina');
+INSERT INTO `pais` VALUES (1,'Argentina'),(2,'Chile');
 /*!40000 ALTER TABLE `pais` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -301,7 +331,7 @@ CREATE TABLE `pedido` (
 
 LOCK TABLES `pedido` WRITE;
 /*!40000 ALTER TABLE `pedido` DISABLE KEYS */;
-INSERT INTO `pedido` VALUES (1,1,'29938654','2016-05-08 00:00:00');
+INSERT INTO `pedido` VALUES (1,1,'29938654','2016-05-08 00:00:00'),(2,2,'50938654','2016-05-08 00:00:00');
 /*!40000 ALTER TABLE `pedido` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -328,7 +358,7 @@ CREATE TABLE `perfiles` (
 
 LOCK TABLES `perfiles` WRITE;
 /*!40000 ALTER TABLE `perfiles` DISABLE KEYS */;
-INSERT INTO `perfiles` VALUES (1,'Administrador','Full');
+INSERT INTO `perfiles` VALUES (1,'Administrador','Full'),(2,'Usuario','write');
 /*!40000 ALTER TABLE `perfiles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -358,7 +388,7 @@ CREATE TABLE `postre` (
 
 LOCK TABLES `postre` WRITE;
 /*!40000 ALTER TABLE `postre` DISABLE KEYS */;
-INSERT INTO `postre` VALUES (1,1,'Flan casero',143,'2016-05-08');
+INSERT INTO `postre` VALUES (1,1,'Flan casero',143,'2016-05-08'),(2,2,'Ensalada de frutas',150,'2016-05-08');
 /*!40000 ALTER TABLE `postre` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -397,7 +427,7 @@ CREATE TABLE `proveedor` (
 
 LOCK TABLES `proveedor` WRITE;
 /*!40000 ALTER TABLE `proveedor` DISABLE KEYS */;
-INSERT INTO `proveedor` VALUES (1,'-29635861',1,1,1,'MiVianda','Don bosco 2315','4238-2013','info@mivianda.com.ar');
+INSERT INTO `proveedor` VALUES (1,'-29635861',1,1,1,'MiVianda','Don bosco 2315','4238-2013','info@mivianda.com.ar'),(2,'-11203724',2,2,2,'Viandas Chile','Aruca 215','438-2013','info@viandaschile.cl');
 /*!40000 ALTER TABLE `proveedor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -425,7 +455,7 @@ CREATE TABLE `provincia` (
 
 LOCK TABLES `provincia` WRITE;
 /*!40000 ALTER TABLE `provincia` DISABLE KEYS */;
-INSERT INTO `provincia` VALUES (1,1,'Buenos Aires');
+INSERT INTO `provincia` VALUES (1,1,'Buenos Aires'),(2,2,'Santiago de Chile');
 /*!40000 ALTER TABLE `provincia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -451,7 +481,7 @@ CREATE TABLE `tipo_doc` (
 
 LOCK TABLES `tipo_doc` WRITE;
 /*!40000 ALTER TABLE `tipo_doc` DISABLE KEYS */;
-INSERT INTO `tipo_doc` VALUES (1,'DNI');
+INSERT INTO `tipo_doc` VALUES (1,'DNI'),(2,'ID');
 /*!40000 ALTER TABLE `tipo_doc` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -464,4 +494,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-20 21:14:10
+-- Dump completed on 2016-05-26 19:29:32
