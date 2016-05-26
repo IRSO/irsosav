@@ -100,16 +100,23 @@ function Todo() {
 
   this.delete = function(id, res) {
     connection.acquire(function(err, con) {
-      con.query('delete from cliente where id = ?', [id], function(err, result) {
-        con.release();
+      con.query('delete from pedido where documento = ?', [id], function(err, result) {
+    //    con.release();
         if (err) {
           res.send({status: 1, message: 'IRSOSAV creacion fallida'});
         } else {
-          res.send({status: 0, message: 'IRSOSAV creacion exitosa'});
-        }
+        con.query('delete from cliente where documento = ?', [id], function(err, result) {
+          con.release();
+          if (err) {
+            res.send({status: 1, message: 'IRSOSAV creacion fallida'});
+          } else {
+            res.send({status: 0, message: 'IRSOSAV creacion exitosa'});
+          }
+          });
+        };
       });
     });
-   };
-}
+  };
+};
 
 module.exports = new Todo();
