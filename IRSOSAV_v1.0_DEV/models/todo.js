@@ -68,6 +68,10 @@ function Todo() {
       texto.id = ""+[id];
       texto.content = "Hola mundo";
       test.push(texto);
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Credentials', true);
+      res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+      res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
       res.jsonp(test);
       console.log('Especificaron ID en test');
   };
