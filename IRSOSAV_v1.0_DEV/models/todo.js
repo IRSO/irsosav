@@ -26,6 +26,10 @@ function Todo() {
            empleados.push(empleado);
           }
           con.release();
+          res.setHeader('Access-Control-Allow-Origin', '*');
+          res.setHeader('Access-Control-Allow-Credentials', true);
+          res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+          res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
           res.jsonp(empleados);
           console.log('Esta vacio');
         });
@@ -56,6 +60,10 @@ function Todo() {
           empleados.push(empleado);
         }
         con.release();
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Credentials', true);
+        res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
         res.jsonp(empleados);
         console.log('Especificaron DNI');
       });
