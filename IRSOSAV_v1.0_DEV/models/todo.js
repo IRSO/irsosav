@@ -3,7 +3,7 @@ var connection = require('../connection');
 function Todo() {
   this.get = function(res) {
       connection.acquire(function(err, con) {
-        con.query('select * from cliente', function(err, rows) {
+        con.query('select * from empleado', function(err, rows) {
           if (err) throw err;
           var empleados=[]; // Se crea un array vacio.
           var i;
@@ -38,7 +38,7 @@ function Todo() {
 
   this.getid = function(id, res) {
     connection.acquire(function(err, con) {
-      con.query('select * from cliente where documento = ?', [id], function(err, rows) {
+      con.query('select * from empleado where documento = ?', [id], function(err, rows) {
         if (err) throw err;
         var empleados=[]; // Se crea un array vacio.
         for (var i = 0; i < rows.length; i++) {
@@ -86,7 +86,7 @@ function Todo() {
 
   this.create = function(todo, res) {
     connection.acquire(function(err, con) {
-      con.query('insert into cliente set ?', todo, function(err, result) {
+      con.query('insert into empleado set ?', todo, function(err, result) {
         con.release();
         if (err) {
           res.send({status: 1, message: 'IRSOSAV creacion fallida'});
@@ -99,7 +99,7 @@ function Todo() {
 
   this.update = function(todo, res) {
     connection.acquire(function(err, con) {
-      con.query('update cliente set ? where id = ?', [todo, todo.id], function(err, result) {
+      con.query('update empleado set ? where id = ?', [todo, todo.id], function(err, result) {
         con.release();
         if (err) {
           res.send({status: 1, message: 'IRSOSAV creacion fallida'});
@@ -117,7 +117,7 @@ function Todo() {
         if (err) {
           res.send({status: 1, message: 'IRSOSAV creacion fallida'});
         } else {
-        con.query('delete from cliente where documento = ?', [id], function(err, result) {
+        con.query('delete from empleado where documento = ?', [id], function(err, result) {
           con.release();
           if (err) {
             res.send({status: 1, message: 'IRSOSAV creacion fallida'});

@@ -5,7 +5,6 @@ var routes = require('./routes');
 //var md5 = require('MD5');
 
 var app = express();
-
 app.use(bodyparser.urlencoded({extended: true}));
 app.use(bodyparser.json());
 

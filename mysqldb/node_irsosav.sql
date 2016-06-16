@@ -1,6 +1,6 @@
 -- MySQL dump 10.14  Distrib 5.5.47-MariaDB, for Linux (x86_64)
 --
--- Host: localhost    Database: IRSOSAV
+-- Host: localhost    Database: node_irsosav
 -- ------------------------------------------------------
 -- Server version	5.5.47-MariaDB
 
