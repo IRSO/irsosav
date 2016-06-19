@@ -9,7 +9,7 @@ function Connection() {
       host: '127.0.0.1',
       user: 'irsosav',
       password: 'motor970',
-      database: 'IRSOSAV_v1',
+      database: 'node_irsosav',
       port: '3306',
       waitForConnections: 'false',
       debug: 'false'
