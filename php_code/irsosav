@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="utf8" collation="utf8_spanish_ci">irsosav</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="documentos_tipos" view="colnames">
+<left>261</left>
+<top>169</top>
+<width>177</width>
+<height>98</height>
+<sql_create_table>CREATE TABLE `documentos_tipos` (
+  `ID_DOCUMENTO_TIPO` int(11) NOT NULL,
+  `DESCRIPCION` varchar(100) NOT NULL,
+  PRIMARY KEY (`ID_DOCUMENTO_TIPO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="localidades" view="colnames">
+<left>274</left>
+<top>277</top>
+<width>136</width>
+<height>119</height>
+<sql_create_table>CREATE TABLE `localidades` (
+  `ID_LOCALIDAD` int(11) NOT NULL AUTO_INCREMENT,
+  `ID_PROVINCIA` int(11) NOT NULL,
+  `DESCRIPCION` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`ID_LOCALIDAD`),
+  KEY `FK_LOCALIDAD_PROVINCIA` (`ID_PROVINCIA`),
+  CONSTRAINT `FK_LOCALIDAD_PROVINCIA` FOREIGN KEY (`ID_PROVINCIA`) REFERENCES `provincias` (`ID_PROVINCIA`)
+) ENGINE=InnoDB AUTO_INCREMENT=2383 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+<table name="menues" view="colnames">
+<left>437</left>
+<top>11</top>
+<width>154</width>
+<height>131</height>
+<sql_create_table>CREATE TABLE `menues` (
+  `ID_MENU` int(11) NOT NULL,
+  `DESCRIPCION` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  `PRECIO` double NOT NULL,
+  `ID_MENU_ESTADO` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID_MENU`),
+  KEY `fk_MENU_ESTADO` (`ID_MENU_ESTADO`),
+  CONSTRAINT `fk_MENU_ESTADO` FOREIGN KEY (`ID_MENU_ESTADO`) REFERENCES `menues_estado` (`ID_MENU_ESTADO`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+<table name="menues_categoria" view="colnames">
+<left>943</left>
+<top>5</top>
+<width>176</width>
+<height>98</height>
+<sql_create_table>CREATE TABLE `menues_categoria` (
+  `ID_MENU_CATEGORIA` int(11) NOT NULL,
+  `DESCRIPCION` varchar(100) NOT NULL,
+  PRIMARY KEY (`ID_MENU_CATEGORIA`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="menues_estado" view="colnames">
+<left>205</left>
+<top>15</top>
+<width>154</width>
+<height>95</height>
+<sql_create_table>CREATE TABLE `menues_estado` (
+  `ID_MENU_ESTADO` int(11) NOT NULL,
+  `DESCRIPCION` varchar(100) NOT NULL,
+  PRIMARY KEY (`ID_MENU_ESTADO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="menues_platos" view="colnames">
+<left>707</left>
+<top>3</top>
+<width>176</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `menues_platos` (
+  `ID_MENU_PLATO` int(11) NOT NULL,
+  `ID_MENU_CATEGORIA` int(11) NOT NULL,
+  `ID_PLATO` int(11) NOT NULL,
+  `SEMANA` int(11) NOT NULL,
+  `DIA` int(2) NOT NULL,
+  KEY `fk_MENU_PLATO_MENU` (`ID_MENU_PLATO`),
+  KEY `fk_MENU_PLATO` (`ID_PLATO`),
+  KEY `fk_MENU_CATEGORIA` (`ID_MENU_CATEGORIA`),
+  CONSTRAINT `fk_MENU_CATEGORIA` FOREIGN KEY (`ID_MENU_CATEGORIA`) REFERENCES `menues_categoria` (`ID_MENU_CATEGORIA`),
+  CONSTRAINT `fk_MENU_PLATO` FOREIGN KEY (`ID_PLATO`) REFERENCES `platos` (`ID_PLATO`),
+  CONSTRAINT `fk_MENU_PLATO_MENU` FOREIGN KEY (`ID_MENU_PLATO`) REFERENCES `menues` (`ID_MENU`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+<table name="pedidos_cabecera" view="colnames">
+<left>756</left>
+<top>277</top>
+<width>181</width>
+<height>185</height>
+<sql_create_table>CREATE TABLE `pedidos_cabecera` (
+  `ID_PEDIDO` int(11) NOT NULL AUTO_INCREMENT,
+  `ID_TIPO_PEDIDOS` int(11) NOT NULL,
+  `FECHA` datetime NOT NULL,
+  `SEMANA` int(2) NOT NULL,
+  `DIA` int(1) NOT NULL,
+  `ID_ESTADO_PEDIDO` int(1) NOT NULL,
+  `ID_USUARIO` int(11) NOT NULL,
+  PRIMARY KEY (`ID_PEDIDO`),
+  KEY `ID_TIPO_PEDIDOS` (`ID_TIPO_PEDIDOS`),
+  KEY `FK_pedido_estado` (`ID_ESTADO_PEDIDO`),
+  KEY `FK_pedidos_usuario` (`ID_USUARIO`),
+  CONSTRAINT `FK_pedido_estado` FOREIGN KEY (`ID_ESTADO_PEDIDO`) REFERENCES `estado_pedido` (`ID_ESTADO_PEDIDO`),
+  CONSTRAINT `FK_pedidos_usuario` FOREIGN KEY (`ID_USUARIO`) REFERENCES `usuarios` (`ID_USUARIO`),
+  CONSTRAINT `fk_pedidos_cabecera_tipo_pedidos` FOREIGN KEY (`ID_TIPO_PEDIDOS`) REFERENCES `pedidos_tipo` (`ID_TIPO_PEDIDOS`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="pedidos_detalle" view="colnames">
+<left>461</left>
+<top>167</top>
+<width>225</width>
+<height>169</height>
+<sql_create_table>CREATE TABLE `pedidos_detalle` (
+  `ID_PEDIDO_DETALLE` int(11) NOT NULL AUTO_INCREMENT,
+  `ID_PEDIDO` int(11) NOT NULL,
+  `ID_MENU_PLATO` int(11) NOT NULL,
+  `DESCRIPCION` varchar(100) DEFAULT NULL,
+  `CANT` int(11) NOT NULL,
+  `ID_PEDIDO_DETALLE_ESTADO` int(11) NOT NULL,
+  PRIMARY KEY (`ID_PEDIDO_DETALLE`),
+  KEY `ID_PEDIDO` (`ID_PEDIDO`),
+  KEY `ID_PEDIDO_DETALLE_ESTADO` (`ID_PEDIDO_DETALLE_ESTADO`),
+  KEY `fK_pedidos_detalle_menu_plato` (`ID_MENU_PLATO`),
+  CONSTRAINT `fK_pedidos_detalle_menu_plato` FOREIGN KEY (`ID_MENU_PLATO`) REFERENCES `menues_platos` (`ID_MENU_PLATO`),
+  CONSTRAINT `fk_pedidos_detalle_estado` FOREIGN KEY (`ID_PEDIDO_DETALLE_ESTADO`) REFERENCES `pedidos_detalle_estado` (`ID_PEDIDO_DETALLE_ESTADO`),
+  CONSTRAINT `fk_pedidos_detalle_pedido` FOREIGN KEY (`ID_PEDIDO`) REFERENCES `pedidos_cabecera` (`ID_PEDIDO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="pedidos_detalle_estado" view="colnames">
+<left>720</left>
+<top>490</top>
+<width>225</width>
+<height>95</height>
+<sql_create_table>CREATE TABLE `pedidos_detalle_estado` (
+  `ID_PEDIDO_DETALLE_ESTADO` int(11) NOT NULL,
+  `DESCRIPCION` varchar(100) NOT NULL,
+  PRIMARY KEY (`ID_PEDIDO_DETALLE_ESTADO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="pedidos_tipo" view="colnames">
+<left>983</left>
+<top>268</top>
+<width>156</width>
+<height>98</height>
+<sql_create_table>CREATE TABLE `pedidos_tipo` (
+  `ID_TIPO_PEDIDOS` int(11) NOT NULL,
+  `DESCRIPCION` varchar(100) NOT NULL,
+  PRIMARY KEY (`ID_TIPO_PEDIDOS`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="platos" view="colnames">
+<left>955</left>
+<top>134</top>
+<width>130</width>
+<height>120</height>
+<sql_create_table>CREATE TABLE `platos` (
+  `ID_PLATO` int(11) NOT NULL AUTO_INCREMENT,
+  `DESCRIPCION` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  `PRECIO` double DEFAULT NULL,
+  PRIMARY KEY (`ID_PLATO`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+<table name="provincias" view="colnames">
+<left>442</left>
+<top>372</top>
+<width>134</width>
+<height>98</height>
+<sql_create_table>CREATE TABLE `provincias` (
+  `ID_PROVINCIA` int(11) NOT NULL AUTO_INCREMENT,
+  `DESCRIPCION` varchar(100) NOT NULL,
+  PRIMARY KEY (`ID_PROVINCIA`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="usuarios" view="colnames">
+<left>16</left>
+<top>167</top>
+<width>177</width>
+<height>265</height>
+<sql_create_table>CREATE TABLE `usuarios` (
+  `ID_USUARIO` int(11) NOT NULL AUTO_INCREMENT,
+  `USUARIO` varchar(100) DEFAULT NULL,
+  `DESCRIPCION` varchar(100) NOT NULL,
+  `CLAVE` varchar(100) DEFAULT NULL,
+  `TELEFONO` varchar(100) DEFAULT NULL,
+  `ID_DOCUMENTO_TIPO` int(11) DEFAULT NULL,
+  `NRO_DOCUMENTO` int(11) DEFAULT NULL,
+  `ID_LOCALIDAD` int(11) DEFAULT NULL,
+  `ID_PROVINCIA` int(11) DEFAULT NULL,
+  `ID_USUARIO_CARGO` int(11) NOT NULL,
+  `ID_USUARIO_ESTADO` int(11) NOT NULL,
+  PRIMARY KEY (`ID_USUARIO`),
+  KEY `fk_USUARIOS_ESTADO` (`ID_USUARIO_ESTADO`),
+  KEY `fk_USUARIOS_USUARIOS_CARGO` (`ID_USUARIO_CARGO`),
+  KEY `fk_USUARIOS_DOCUMENTOS_TIPOS` (`ID_DOCUMENTO_TIPO`),
+  KEY `fk_USUARIOS_LOCALIDADES` (`ID_LOCALIDAD`),
+  KEY `fk_USUARIOS_PROVINCIAS` (`ID_PROVINCIA`),
+  CONSTRAINT `fk_USUARIOS_DOCUMENTOS_TIPOS` FOREIGN KEY (`ID_DOCUMENTO_TIPO`) REFERENCES `documentos_tipos` (`ID_DOCUMENTO_TIPO`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_USUARIOS_ESTADO` FOREIGN KEY (`ID_USUARIO_ESTADO`) REFERENCES `usuarios_estado` (`ID_USUARIO_ESTADO`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_USUARIOS_LOCALIDADES` FOREIGN KEY (`ID_LOCALIDAD`) REFERENCES `localidades` (`ID_LOCALIDAD`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_USUARIOS_PROVINCIAS` FOREIGN KEY (`ID_PROVINCIA`) REFERENCES `provincias` (`ID_PROVINCIA`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_USUARIOS_USUARIOS_CARGO` FOREIGN KEY (`ID_USUARIO_CARGO`) REFERENCES `usuarios_cargo` (`ID_USUARIO_CARGO`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="usuarios_cargo" view="colnames">
+<left>247</left>
+<top>423</top>
+<width>171</width>
+<height>98</height>
+<sql_create_table>CREATE TABLE `usuarios_cargo` (
+  `ID_USUARIO_CARGO` int(11) NOT NULL,
+  `DESCRIPCION` varchar(100) NOT NULL,
+  PRIMARY KEY (`ID_USUARIO_CARGO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="usuarios_estado" view="colnames">
+<left>247</left>
+<top>531</top>
+<width>176</width>
+<height>97</height>
+<sql_create_table>CREATE TABLE `usuarios_estado` (
+  `ID_USUARIO_ESTADO` int(11) NOT NULL,
+  `DESCRIPCION` varchar(100) NOT NULL,
+  PRIMARY KEY (`ID_USUARIO_ESTADO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="estado_pedido" view="colnames">
+<left>989</left>
+<top>412</top>
+<width>174</width>
+<height>98</height>
+<sql_create_table>CREATE TABLE `estado_pedido` (
+  `ID_ESTADO_PEDIDO` int(11) NOT NULL AUTO_INCREMENT,
+  `DESCRIPCION` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`ID_ESTADO_PEDIDO`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>

@@ -1,0 +1,6 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond $1 !^(usuarios|provincias|localidades|tipodocumentos|perfiles)/(.*)$
+RewriteRule ^(.*)$ http://localhost:3000/$1  [P,L]
+RewriteRule ^(.+)$ index.php?uri=$1 [QSA,L]
