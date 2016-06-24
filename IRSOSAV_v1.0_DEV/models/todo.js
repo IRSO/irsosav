@@ -25,7 +25,7 @@ function Todo() {
         res.setHeader('Access-Control-Allow-Credentials', true);
         res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
         res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
-        res.jsonp(proveedores);
+        res.json({'data': proveedores});
       });
     });
   };
@@ -52,7 +52,7 @@ function Todo() {
         res.setHeader('Access-Control-Allow-Credentials', true);
         res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
         res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
-        res.jsonp(proveedores);
+        res.json({'data': proveedores});
       });
     });
   };
@@ -177,7 +177,7 @@ function Todo() {
         res.setHeader('Access-Control-Allow-Credentials', true);
         res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
         res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
-        res.jsonp(sesiones);
+        res.json({'data': sesiones});
       });
     });
   };
@@ -262,7 +262,7 @@ function Todo() {
         res.setHeader('Access-Control-Allow-Credentials', true);
         res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
         res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
-        res.jsonp(menues);
+        res.json({'data': menues});
       });
     });
   };
@@ -288,7 +288,7 @@ function Todo() {
         res.setHeader('Access-Control-Allow-Credentials', true);
         res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
         res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
-        res.json(menues);
+        res.json({'data': menues});
       });
     });
   };
