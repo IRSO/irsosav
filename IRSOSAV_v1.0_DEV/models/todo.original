@@ -81,9 +81,40 @@ function Todo() {
     });
   };
 
+/* Metodo PUT */
+  this.updprov = function(todo, id, res) {
+    connection.acquire(function(err, con) {
+      con.query("set foreign_key_checks = 0", function(err, result) {
+        if (err) {
+          res.send({status: 1, message: 'Actualizacion de proveedor fallida'});
+        } else {
+            con.query("update proveedor set ? where proveedor = ?", [todo, id], function(err, result) {
+              if (err) {
+                res.send({status: 1, message: 'Actualizacion de proveedor fallida'});
+              } else {
+                  con.query("update menu set proveedor = ? where proveedor = ?", [todo.proveedor, id], function(err, result) {
+                    if (err) {
+                      res.send({status: 1, message: 'Actualizacion de proveedor fallida'});
+                    } else {
+                        con.query("set foreign_key_checks = 1", function(err, result) {
+                          con.release();
+                          if (err) {
+                            res.send({status: 1, message: 'Actualizacion de proveedor fallida'});
+                          } else {
+                              res.send({status: 0, message: 'Actualizacion de proveedor exitosa'});
+                          }
+                        });
+                    };
+                  });
+ 		};
+	    });
+        };
+      });
+    });
+  };
+
 /* Metodo PATCH */
-  this.upgprov = function(todo, id, res) {
-    console.log(todo, id, res);
+  this.upgprov = function(todo, res) {
     connection.acquire(function(err, con) {
       con.query("set foreign_key_checks = 0", function(err, result) {
         if (err) {
@@ -173,6 +204,20 @@ function Todo() {
           res.send({status: 1, message: 'Creacion en sesion fallida'});
         } else {
             res.send({status: 0, message: 'Creacion en sesion exitosa'});
+        }
+      });
+    });
+  };
+
+/* Metodo PUT */
+  this.updses = function(todo, id, res) {
+    connection.acquire(function(err, con) {
+      con.query('update sesion set ? where usuario = ?', [todo, id], function(err, result) {
+        con.release();
+        if (err) {
+          res.send({status: 1, message: 'Actualizacion de sesion fallida'});
+        } else {
+            res.send({status: 0, message: 'Actualizacion de sesion exitosa'});
         }
       });
     });
@@ -283,6 +328,20 @@ function Todo() {
 
 /* Metodo PATCH */
   this.upgmenu = function(todo, id, res) {
+    connection.acquire(function(err, con) {
+      con.query('update menu set ? where id_menu = ?', [todo, id], function(err, result) {
+        con.release();
+        if (err) {
+          res.json({status: 1, message: 'Actualizacion de menu fallida'});
+        } else {
+            res.json({status: 0, message: 'Actualizacion de menu exitosa'});
+        }
+      });
+    });
+  };
+
+/* Metodo PUT */
+  this.updmenu = function(todo, id, res) {
     connection.acquire(function(err, con) {
       con.query('update menu set ? where id_menu = ?', [todo, id], function(err, result) {
         con.release();

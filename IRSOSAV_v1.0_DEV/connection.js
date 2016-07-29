@@ -2,7 +2,6 @@ var mysql = require('mysql');
 
 function Connection() {
   this.pool = null;
-
   this.init = function() {
     this.pool = mysql.createPool({
       connectionLimit : '10',
