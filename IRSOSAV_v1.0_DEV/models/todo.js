@@ -30,6 +30,7 @@ function Todo() {
             res.json({'data': proveedores});
         }
       });
+	//res.json(err);
     });
   };
 
@@ -83,33 +84,40 @@ function Todo() {
 
 /* Metodo PATCH */
   this.upgprov = function(todo, id, res) {
-    console.log(todo, id, res);
     connection.acquire(function(err, con) {
       con.query("set foreign_key_checks = 0", function(err, result) {
-        if (err) {
-          res.send({status: 1, message: 'Actualizacion de proveedor fallida'});
-        } else {
-            con.query("update proveedor set ? where proveedor = ?", [todo, id], function(err, result) {
-              if (err) {
-                res.send({status: 1, message: 'Actualizacion de proveedor fallida'});
-              } else {
-                  con.query("update menu set proveedor = ? where proveedor = ?", [todo.proveedor, id], function(err, result) {
-                    if (err) {
-                      res.send({status: 1, message: 'Actualizacion de proveedor fallida'});
-                    } else {
+  //      if (err) {
+  //        res.send({status: 1, message: 'Actualizacion de proveedor fallida'});
+  //      } else {
+            console.log(todo);
+            console.log(id);
+            con.query("update proveedor set ? where ?", [todo, id], function(err, result) {
+  //            if (err) {
+  //              res.send({status: 1, message: 'Actualizacion de proveedor fallida'});
+  //            } else {
+                  con.query("update menu set proveedor = ? where ?", [todo.proveedor, id], function(err, result) {
+  //                  if (err) {
+  //                    res.send({status: 1, message: 'Actualizacion de proveedor fallida'});
+  //                  } else {
                         con.query("set foreign_key_checks = 1", function(err, result) {
                           con.release();
-                          if (err) {
-                            res.send({status: 1, message: 'Actualizacion de proveedor fallida'});
-                          } else {
-                              res.send({status: 0, message: 'Actualizacion de proveedor exitosa'});
-                          }
+                          res.setHeader('Access-Control-Allow-Origin', '*');
+                          res.setHeader('Access-Control-Allow-Credentials', true);
+                          res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+                          res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
+                          res.status(200);
+                          res.send({status: 0, message: 'Actualizacion de proveedor exitosa'});
+  //                        if (err) {
+  //                          res.send({status: 1, message: 'Actualizacion de proveedor fallida'});
+  //                        } else {
+  //                            res.send({status: 0, message: 'Actualizacion de proveedor exitosa'});
+  //                        }
                         });
-                    };
+  //                  };
                   });
- 		};
+ //		};
 	    });
-        };
+ //       };
       });
     });
   };
@@ -284,8 +292,13 @@ function Todo() {
 /* Metodo PATCH */
   this.upgmenu = function(todo, id, res) {
     connection.acquire(function(err, con) {
-      con.query('update menu set ? where id_menu = ?', [todo, id], function(err, result) {
+      con.query('update menu set ? where ?', [todo, id], function(err, result) {
         con.release();
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Credentials', true);
+        res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
+        res.status(200);
         if (err) {
           res.json({status: 1, message: 'Actualizacion de menu fallida'});
         } else {

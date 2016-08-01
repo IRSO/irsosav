@@ -23,8 +23,12 @@ module.exports = {
     });
 
 /* Metodo PATCH */
-    app.patch('/proveedor/:id', function(req, res) {
-      todo.upgprov(req.body, req.params.id, res);
+    app.put('/proveedor/:id', function(req, res) {
+      var prov= {proveedor: req.params.id};
+      var body= req.body;
+      console.log(prov);
+      console.log(body);
+      todo.upgprov(body, prov, res);
     });
 
 
@@ -70,8 +74,12 @@ module.exports = {
     });
 
 /* Metodo PATCH */
-    app.patch('/menu/', function(req, res) {
-      todo.upgmenu(req.body, req.body.id_menu, res);
+    app.put('/menu/:id', function(req, res) {
+      var men= {id_menu: req.params.id};
+      var body= req.body;
+      console.log(men);
+      console.log(body);
+      todo.upgmenu(body, men, res);
     });
 
 /* Metodo POST */

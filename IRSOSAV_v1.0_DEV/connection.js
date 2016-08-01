@@ -15,7 +15,6 @@ function Connection() {
     });
   console.log('Creando un nuevo pool de conexiones en MySQL.');
   };
-
   this.acquire = function(callback) {
     this.pool.getConnection(function(err, connection) {
       if (err) {
@@ -24,6 +23,19 @@ function Connection() {
       callback(err, connection);
     });
   };
-}
+/*
+ this.acquire = function(err, callback){
+  try
+    {
+	 throw new err('Error forzado');
+    }
+    catch (err){
+	throw err;
+    }
+  };
+};
+*/
+};
+
 
 module.exports = new Connection();
