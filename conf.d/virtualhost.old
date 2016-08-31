@@ -1,0 +1,32 @@
+<IfModule mpm_event_module>
+  StartServers 		      3
+  MinSpareThreads            25
+  MaxSpareThreads            75
+  ThreadLimit                64
+  ThreadsPerChild            25
+  MaxRequestWorkers          30
+  MaxConnectionsPerChild   1000
+</IfModule>
+
+<VirtualHost *>
+  ServerName irsosavphp.olympos.com.ar
+  DocumentRoot /var/www/html/irsosav
+  <Directory /var/www/html/irsosav>
+    AllowOverride All
+  </Directory>
+  <FilesMatch \.php$>
+        SetHandler "proxy:fcgi://127.0.0.1:9000"
+    </FilesMatch>
+</VirtualHost>
+
+<VirtualHost *>
+  ServerName irsosavnodejs.olympos.com.ar
+  DocumentRoot /var/www/html/nodejs
+  <Directory /var/www/html>
+    AllowOverride All
+  </Directory>
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI}  ^/	[NC]
+  RewriteRule /(.*) http://localhost:3000/$1	[P,L]
+</VirtualHost>
+
