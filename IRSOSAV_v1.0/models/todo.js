@@ -292,8 +292,13 @@ function Todo() {
 /* Metodo PATCH */
   this.upgmenu = function(todo, id, res) {
     connection.acquire(function(err, con) {
-      con.query('update menu set ? where id_menu = ?', [todo, id], function(err, result) {
+      con.query('update menu set ? where ?', [todo, id], function(err, result) {
         con.release();
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Credentials', true);
+        res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
+        res.status(200);
         if (err) {
           res.json({status: 1, message: 'Actualizacion de menu fallida'});
         } else {

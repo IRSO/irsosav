@@ -82,6 +82,25 @@ function Todo() {
     });
   };
 
+  this.createlogin = function(todo, todo, res) {
+    //connection.acquire(function(err, con) {
+      //con.query('insert into proveedor set ?', todo, function(err, result) {
+        //con.release();
+        //if (err) {
+          //res.send({status: 1, message: 'Creacion de proveedor fallida'});
+        //} else {
+            res.setHeader('session', '0000001');
+	    res.setHeader('profile', 'admin');
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            res.setHeader('Access-Control-Allow-Credentials', true);
+            res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+            res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
+            res.send({status: 200, message: 'Autenticacion exitosa'});
+        //}
+      //});
+    //});
+  };
+
 /* Metodo PATCH */
   this.upgprov = function(todo, id, res) {
     connection.acquire(function(err, con) {

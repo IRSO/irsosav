@@ -24,6 +24,6 @@ app.use(function (req, res, next) {
 connection.init();
 routes.configure(app);
 
-var server = app.listen(3000, function() {
+var server = app.listen(80, function() {
   console.log('Todo joya!!! Estoy escuchando en el puerto ' + server.address().port);
 });

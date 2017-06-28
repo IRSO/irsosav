@@ -11,7 +11,7 @@ module.exports = {
     app.get('/proveedor/:id/', function(req, res) {
       todo.getprovid(req.params.id, res);
     });
-
+    
 /* Metodo DELETE */
     app.delete('/proveedor/:id/', function(req, res) {
       todo.deleteprovid(req.params.id, res);
@@ -20,6 +20,12 @@ module.exports = {
 /* Metodo POST */
     app.post('/proveedor/', function(req, res) {
       todo.createprov(req.body, res);
+    });
+
+    app.post('/login/', function(req, res) {
+      todo.createlogin(req.header, req.body, res);
+      console.log(req.header);
+      console.log(req.bodybody);
     });
 
 /* Metodo PATCH */

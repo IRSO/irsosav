@@ -74,8 +74,12 @@ module.exports = {
     });
 
 /* Metodo PATCH */
-    app.patch('/menu/', function(req, res) {
-      todo.upgmenu(req.body, req.body.id_menu, res);
+    app.put('/menu/:id', function(req, res) {
+      var men= {id_menu: req.params.id};
+      var body= req.body;
+      console.log(men);
+      console.log(body);
+      todo.upgmenu(body, men, res);
     });
 
 /* Metodo POST */
